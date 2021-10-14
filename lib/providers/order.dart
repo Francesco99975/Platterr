@@ -46,6 +46,8 @@ class Order with ChangeNotifier {
     dueDate = DateTime.parse(map['dueDate']);
   }
 
+  String get fullname => customerFirstName + " " + customerLastName;
+
   double get total => platters.fold(0.0, (prev, el) => prev + el.format.price);
 
   Map<String, dynamic> toMapAdd() {

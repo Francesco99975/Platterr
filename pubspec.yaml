@@ -36,6 +36,7 @@ dependencies:
   provider: ^6.0.1 #MIT
   http: ^0.13.3 #MIT
   intl: ^0.17.0 #BSD3CLAUSE
+  url_launcher: ^6.0.12 #BSD3CLAUSE
 
 dev_dependencies:
   flutter_test:

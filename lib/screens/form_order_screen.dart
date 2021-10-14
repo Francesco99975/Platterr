@@ -180,9 +180,13 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
         style: Theme.of(context).textTheme.bodyText1,
       ),
       actions: [
-        TextButton(
+        TextButton.icon(
+            icon: Icon(
+              _paid ? Icons.monetization_on : Icons.money_off,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
             onPressed: _togglePaid,
-            child: Text(
+            label: Text(
               _paid ? "PAID" : "UNPAID",
               style: Theme.of(context).textTheme.bodyText2,
             ))
@@ -316,6 +320,8 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                               TextFormField(
                                 autocorrect: false,
                                 initialValue: _comment,
+                                maxLines: null,
+                                keyboardType: TextInputType.multiline,
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor),
                                 decoration: InputDecoration(
@@ -351,9 +357,14 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                                 children: [
                                   InkWell(
                                     child: Container(
-                                      color: !_delivery
-                                          ? Theme.of(context).primaryColor
-                                          : Theme.of(context).primaryColorDark,
+                                      decoration: BoxDecoration(
+                                          color: !_delivery
+                                              ? Theme.of(context).primaryColor
+                                              : Theme.of(context)
+                                                  .primaryColorDark,
+                                          borderRadius: const BorderRadius.only(
+                                              topLeft: Radius.circular(5),
+                                              bottomLeft: Radius.circular(5))),
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text("Pickup",
                                           style: !_delivery
@@ -372,9 +383,14 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                                   ),
                                   InkWell(
                                     child: Container(
-                                      color: _delivery
-                                          ? Theme.of(context).primaryColor
-                                          : Theme.of(context).primaryColorDark,
+                                      decoration: BoxDecoration(
+                                          color: _delivery
+                                              ? Theme.of(context).primaryColor
+                                              : Theme.of(context)
+                                                  .primaryColorDark,
+                                          borderRadius: const BorderRadius.only(
+                                              topRight: Radius.circular(5),
+                                              bottomRight: Radius.circular(5))),
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text("Delivery",
                                           style: _delivery

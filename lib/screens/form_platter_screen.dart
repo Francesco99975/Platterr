@@ -208,6 +208,8 @@ class _FormPlatterScreenState extends State<FormPlatterScreen> {
                             ),
                             TextFormField(
                               autocorrect: false,
+                              maxLines: null,
+                              keyboardType: TextInputType.multiline,
                               initialValue: args['edit'] ? _description : null,
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor),

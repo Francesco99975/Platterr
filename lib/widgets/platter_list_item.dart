@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:platterr/providers/platter.dart';
 import 'package:platterr/providers/platters.dart';
 import 'package:platterr/screens/form_platter_screen.dart';
+import 'package:platterr/screens/platter_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class PlatterListItem extends StatelessWidget {
@@ -81,8 +82,13 @@ class PlatterListItem extends StatelessWidget {
         elevation: 3,
         color: Theme.of(context).primaryColor,
         child: ListTile(
-          leading: Icon(Icons.dashboard_rounded,
-              color: Theme.of(context).colorScheme.secondary, size: 26),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => PlatterDetailScreen(platter),
+          )),
+          leading: CircleAvatar(
+            child: Icon(Icons.dashboard_sharp,
+                color: Theme.of(context).colorScheme.secondary, size: 26),
+          ),
           title: Text(
             platter.name,
             style: Theme.of(context).textTheme.bodyText2,

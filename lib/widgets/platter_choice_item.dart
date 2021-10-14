@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:platterr/providers/platter.dart';
+import 'package:platterr/screens/platter_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class PlatterChoiceItem extends StatefulWidget {
@@ -17,7 +18,9 @@ class _PlatterChoiceItemState extends State<PlatterChoiceItem> {
       elevation: 3,
       color: Theme.of(context).primaryColor,
       child: ListTile(
-          onTap: () => print("tapped"),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => PlatterDetailScreen(platter),
+              )),
           leading: Icon(Icons.dashboard_rounded,
               color: Theme.of(context).colorScheme.secondary, size: 26),
           title: Text(

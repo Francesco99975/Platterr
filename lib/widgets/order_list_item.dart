@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:platterr/providers/order.dart';
 import 'package:platterr/providers/orders.dart';
+import 'package:platterr/screens/order_detail_screen.dart';
 import 'package:platterr/screens/platter_choice_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -82,10 +83,15 @@ class OrderListItem extends StatelessWidget {
         elevation: 3,
         color: Theme.of(context).primaryColor,
         child: ListTile(
-          leading: Icon(Icons.dashboard_rounded,
-              color: Theme.of(context).colorScheme.secondary, size: 26),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => OrderDetailScreen(order),
+          )),
+          leading: CircleAvatar(
+            child: Icon(order.paid ? Icons.monetization_on : Icons.money_off,
+                color: Theme.of(context).colorScheme.secondary, size: 26),
+          ),
           title: Text(
-            order.customerLastName,
+            "${order.customerLastName} (${order.delivery ? 'Delivery' : 'Pickup'})",
             style: Theme.of(context).textTheme.bodyText2,
           ),
           subtitle: Text(
