@@ -1,4 +1,4 @@
-package com.example.platterr
+package dev.francescobarranca.platterr
 
 import io.flutter.embedding.android.FlutterActivity
 

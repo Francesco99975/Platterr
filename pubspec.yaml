@@ -37,6 +37,7 @@ dependencies:
   http: ^0.13.3 #MIT
   intl: ^0.17.0 #BSD3CLAUSE
   url_launcher: ^6.0.12 #BSD3CLAUSE
+  firebase_messaging: ^10.0.8 #BSD3CLAUSE
 
 dev_dependencies:
   flutter_test:
