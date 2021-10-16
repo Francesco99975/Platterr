@@ -7,7 +7,9 @@ import 'package:platterr/providers/platter_request.dart';
 class Orders with ChangeNotifier {
   List<Order> _items = [];
 
-  List<Order> get items => _items;
+  List<Order> get items => _items
+    ..sort((a, b) =>
+        a.dueDate.toIso8601String().compareTo(b.dueDate.toIso8601String()));
 
   int get size => _items.length;
 
