@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "819517764995",
+    "project_id": "platterr-f5ca7",
+    "storage_bucket": "platterr-f5ca7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819517764995:android:ed29381480e20f13e2f2b6",
+        "android_client_info": {
+          "package_name": "dev.francescobarranca.platterr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819517764995-u8es9dgg9ptq3hqodte2u4t1lj8vtohb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcUoXWu5HRHdtoCC427P5AmeI-ffM0i9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819517764995-u8es9dgg9ptq3hqodte2u4t1lj8vtohb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

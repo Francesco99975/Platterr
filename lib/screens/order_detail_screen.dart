@@ -231,6 +231,32 @@ class OrderDetailScreen extends StatelessWidget {
                           )
                           .toList(),
                     )),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text("Total",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(fontSize: 22)),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: deviceSize.width / 1.5,
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColorDark,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Text(
+                        NumberFormat.simpleCurrency().format(order.total),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyText2),
+                  ),
+                ),
               ],
             ),
           ),
