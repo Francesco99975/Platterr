@@ -3,6 +3,9 @@ import 'package:platterr/providers/platter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+const testUrl = "http://10.0.2.2:5000";
+const baseUrl = "https://platterr.francescobarranca.dev";
+
 class Platters with ChangeNotifier {
   List<Platter> _items = [];
 
@@ -12,8 +15,8 @@ class Platters with ChangeNotifier {
 
   Future<bool> loadPlatters() async {
     try {
-      var res = json.decode(
-          (await http.get(Uri.parse('http://10.0.2.2:5000/platters'))).body);
+      var res =
+          json.decode((await http.get(Uri.parse('$baseUrl/platters'))).body);
 
       List<Platter> temp = [];
 
@@ -30,8 +33,7 @@ class Platters with ChangeNotifier {
 
   Future<bool> addPlatter(Platter platter) async {
     try {
-      var res = json.decode((await http.post(
-              Uri.parse('http://10.0.2.2:5000/platters'),
+      var res = json.decode((await http.post(Uri.parse('$baseUrl/platters'),
               headers: {
                 'Content-type': 'application/json',
                 "Accept": "application/json"
@@ -49,8 +51,7 @@ class Platters with ChangeNotifier {
 
   Future<bool> updatePlatter(Platter platter) async {
     try {
-      var res = json.decode((await http.put(
-              Uri.parse('http://10.0.2.2:5000/platters'),
+      var res = json.decode((await http.put(Uri.parse('$baseUrl/platters'),
               headers: {
                 'Content-type': 'application/json',
                 "Accept": "application/json"
@@ -69,7 +70,7 @@ class Platters with ChangeNotifier {
 
   Future<bool> deletePlatter(int id) async {
     try {
-      await http.delete(Uri.parse('http://10.0.2.2:5000/platters/$id'));
+      await http.delete(Uri.parse('$baseUrl/platters/$id'));
 
       _items.removeWhere((itm) => itm.id == id);
       notifyListeners();

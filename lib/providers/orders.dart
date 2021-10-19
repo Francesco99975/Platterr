@@ -4,6 +4,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:platterr/providers/platter_request.dart';
 
+const testUrl = "http://10.0.2.2:5000";
+const baseUrl = "https://platterr.francescobarranca.dev";
+
 class Orders with ChangeNotifier {
   List<Order> _items = [];
 
@@ -21,8 +24,8 @@ class Orders with ChangeNotifier {
 
   Future<bool> loadOrders() async {
     try {
-      var res = json.decode(
-          (await http.get(Uri.parse('http://10.0.2.2:5000/orders'))).body);
+      var res =
+          json.decode((await http.get(Uri.parse('$baseUrl/orders'))).body);
 
       List<Order> temp = [];
 
@@ -39,8 +42,7 @@ class Orders with ChangeNotifier {
 
   Future<bool> addOrder(Order order) async {
     try {
-      var res = json.decode((await http.post(
-              Uri.parse('http://10.0.2.2:5000/orders'),
+      var res = json.decode((await http.post(Uri.parse('$baseUrl/orders'),
               headers: {
                 'Content-type': 'application/json',
                 "Accept": "application/json"
@@ -58,8 +60,7 @@ class Orders with ChangeNotifier {
 
   Future<bool> updateOrder(Order order) async {
     try {
-      var res = json.decode((await http.put(
-              Uri.parse('http://10.0.2.2:5000/orders'),
+      var res = json.decode((await http.put(Uri.parse('$baseUrl/orders'),
               headers: {
                 'Content-type': 'application/json',
                 "Accept": "application/json"
@@ -78,7 +79,7 @@ class Orders with ChangeNotifier {
 
   Future<bool> deleteOrder(int id) async {
     try {
-      await http.delete(Uri.parse('http://10.0.2.2:5000/orders/$id'));
+      await http.delete(Uri.parse('$baseUrl/orders/$id'));
       _items.removeWhere((itm) => itm.id == id);
       notifyListeners();
       return true;
