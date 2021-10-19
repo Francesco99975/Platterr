@@ -46,7 +46,7 @@ class OrderListItem extends StatelessWidget {
               backgroundColor: Theme.of(context).backgroundColor,
               title: Text(
                 "Are you sure ?",
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.bodyText2,
               ),
               content: Text(
                 "Do you want to remove this item?",
@@ -62,8 +62,11 @@ class OrderListItem extends StatelessWidget {
                   onPressed: () => Navigator.of(context).pop(false),
                 ),
                 TextButton(
-                  child:
-                      Text("Yes", style: Theme.of(context).textTheme.bodyText2),
+                  child: Text("Yes",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(color: Colors.green)),
                   onPressed: () => Navigator.of(context).pop(true),
                 ),
               ],
