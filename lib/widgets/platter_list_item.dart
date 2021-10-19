@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:platterr/providers/orders.dart';
 import 'package:platterr/providers/platter.dart';
 import 'package:platterr/providers/platters.dart';
+import 'package:platterr/screens/error_screen.dart';
 import 'package:platterr/screens/form_platter_screen.dart';
 import 'package:platterr/screens/platter_detail_screen.dart';
 import 'package:provider/provider.dart';
@@ -74,8 +76,18 @@ class PlatterListItem extends StatelessWidget {
       },
       onDismissed: (direction) async {
         if (direction == DismissDirection.endToStart) {
-          await Provider.of<Platters>(context, listen: false)
-              .deletePlatter(platter.id!);
+          if (!platter.formats.map((e) => e.id).toList().any((el) =>
+              Provider.of<Orders>(context, listen: false)
+                  .formatUsed()
+                  .contains(el))) {
+            final result = await Provider.of<Platters>(context, listen: false)
+                .deletePlatter(platter.id!);
+
+            if (!result) {
+              Navigator.of(context).pushReplacementNamed(ErrorScreen.routeName,
+                  arguments: {'home': true});
+            }
+          }
         }
       },
       child: Card(

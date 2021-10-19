@@ -8,6 +8,8 @@ import 'package:platterr/screens/loading_screen.dart';
 import 'package:platterr/screens/orders_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'error_screen.dart';
+
 class FormOrderScreen extends StatefulWidget {
   const FormOrderScreen({Key? key}) : super(key: key);
   static const routeName = "/add_order";
@@ -41,32 +43,41 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
       });
       _formKey.currentState!.save();
 
+      late final bool result;
+
       if (!args['edit']) {
-        await Provider.of<Orders>(context, listen: false).addOrder(Order(
-            platters: _platters,
-            customerFirstName: _customerFirstName,
-            customerLastName: _customerLastName,
-            phoneNumber: _phoneNumber,
-            comment: _comment,
-            delivery: _delivery,
-            paid: _paid,
-            createdAt: DateTime.now(),
-            dueDate: _dueDate));
+        result = await Provider.of<Orders>(context, listen: false).addOrder(
+            Order(
+                platters: _platters,
+                customerFirstName: _customerFirstName,
+                customerLastName: _customerLastName,
+                phoneNumber: _phoneNumber,
+                comment: _comment,
+                delivery: _delivery,
+                paid: _paid,
+                createdAt: DateTime.now(),
+                dueDate: _dueDate));
       } else {
-        await Provider.of<Orders>(context, listen: false).updateOrder(Order(
-            id: _updateId,
-            platters: _platters,
-            customerFirstName: _customerFirstName,
-            customerLastName: _customerLastName,
-            phoneNumber: _phoneNumber,
-            comment: _comment,
-            delivery: _delivery,
-            paid: _paid,
-            createdAt: (args['order'] as Order).createdAt,
-            dueDate: _dueDate));
+        result = await Provider.of<Orders>(context, listen: false).updateOrder(
+            Order(
+                id: _updateId,
+                platters: _platters,
+                customerFirstName: _customerFirstName,
+                customerLastName: _customerLastName,
+                phoneNumber: _phoneNumber,
+                comment: _comment,
+                delivery: _delivery,
+                paid: _paid,
+                createdAt: (args['order'] as Order).createdAt,
+                dueDate: _dueDate));
       }
 
-      Navigator.of(context).pushReplacementNamed(OrdersScreen.routeName);
+      if (result) {
+        Navigator.of(context).pushReplacementNamed(OrdersScreen.routeName);
+      } else {
+        Navigator.of(context).pushReplacementNamed(ErrorScreen.routeName,
+            arguments: {'home': true});
+      }
     }
   }
 

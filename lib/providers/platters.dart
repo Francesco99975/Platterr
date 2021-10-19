@@ -10,51 +10,72 @@ class Platters with ChangeNotifier {
 
   int get size => _items.length;
 
-  Future<void> loadPlatters() async {
-    var res = json.decode(
-        (await http.get(Uri.parse('http://10.0.2.2:5000/platters'))).body);
+  Future<bool> loadPlatters() async {
+    try {
+      var res = json.decode(
+          (await http.get(Uri.parse('http://10.0.2.2:5000/platters'))).body);
 
-    List<Platter> temp = [];
+      List<Platter> temp = [];
 
-    for (var el in res) {
-      temp.add(Platter.fromMap(el));
+      for (var el in res) {
+        temp.add(Platter.fromMap(el));
+      }
+
+      _items = temp;
+      return true;
+    } catch (e) {
+      return false;
     }
-
-    _items = temp;
   }
 
-  Future<void> addPlatter(Platter platter) async {
-    var res = json.decode((await http.post(
-            Uri.parse('http://10.0.2.2:5000/platters'),
-            headers: {
-              'Content-type': 'application/json',
-              "Accept": "application/json"
-            },
-            body: json.encode(platter.toMapAdd())))
-        .body);
+  Future<bool> addPlatter(Platter platter) async {
+    try {
+      var res = json.decode((await http.post(
+              Uri.parse('http://10.0.2.2:5000/platters'),
+              headers: {
+                'Content-type': 'application/json',
+                "Accept": "application/json"
+              },
+              body: json.encode(platter.toMapAdd())))
+          .body);
 
-    _items.add(Platter.fromMap(res));
-    notifyListeners();
+      _items.add(Platter.fromMap(res));
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  Future<void> updatePlatter(Platter platter) async {
-    var res = json.decode((await http.put(
-            Uri.parse('http://10.0.2.2:5000/platters'),
-            headers: {
-              'Content-type': 'application/json',
-              "Accept": "application/json"
-            },
-            body: json.encode(platter.toMapUpdate())))
-        .body);
+  Future<bool> updatePlatter(Platter platter) async {
+    try {
+      var res = json.decode((await http.put(
+              Uri.parse('http://10.0.2.2:5000/platters'),
+              headers: {
+                'Content-type': 'application/json',
+                "Accept": "application/json"
+              },
+              body: json.encode(platter.toMapUpdate())))
+          .body);
 
-    final index = _items.indexWhere((itm) => itm.id == platter.id);
-    _items[index] = Platter.fromMap(res['result']);
-    notifyListeners();
+      final index = _items.indexWhere((itm) => itm.id == platter.id);
+      _items[index] = Platter.fromMap(res['result']);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  Future<void> deletePlatter(int id) async {
-    await http.delete(Uri.parse('http://10.0.2.2:5000/platters/$id'));
+  Future<bool> deletePlatter(int id) async {
+    try {
+      await http.delete(Uri.parse('http://10.0.2.2:5000/platters/$id'));
 
-    _items.removeWhere((itm) => itm.id == id);
+      _items.removeWhere((itm) => itm.id == id);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

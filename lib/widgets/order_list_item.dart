@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:platterr/providers/order.dart';
 import 'package:platterr/providers/orders.dart';
+import 'package:platterr/screens/error_screen.dart';
 import 'package:platterr/screens/order_detail_screen.dart';
 import 'package:platterr/screens/platter_choice_screen.dart';
 import 'package:provider/provider.dart';
@@ -75,8 +76,13 @@ class OrderListItem extends StatelessWidget {
       },
       onDismissed: (direction) async {
         if (direction == DismissDirection.endToStart) {
-          await Provider.of<Orders>(context, listen: false)
+          final result = await Provider.of<Orders>(context, listen: false)
               .deleteOrder(order.id!);
+
+          if (!result) {
+            Navigator.of(context).pushReplacementNamed(ErrorScreen.routeName,
+                arguments: {'home': true});
+          }
         }
       },
       child: Card(

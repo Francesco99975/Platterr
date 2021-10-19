@@ -5,6 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:platterr/providers/orders.dart';
 import 'package:platterr/providers/platters.dart';
 import 'package:platterr/providers/theme_changer.dart';
+import 'package:platterr/screens/error_screen.dart';
 import 'package:platterr/screens/form_order_screen.dart';
 import 'package:platterr/screens/form_platter_screen.dart';
 import 'package:platterr/screens/orders_screen.dart';
@@ -111,7 +112,8 @@ class _PlatterrState extends State<Platterr> {
               OrdersScreen.routeName: (_) => const OrdersScreen(),
               FormPlatterScreen.routeName: (_) => const FormPlatterScreen(),
               FormOrderScreen.routeName: (_) => const FormOrderScreen(),
-              PlatterChoiceScreen.routeName: (_) => const PlatterChoiceScreen()
+              PlatterChoiceScreen.routeName: (_) => const PlatterChoiceScreen(),
+              ErrorScreen.routeName: (_) => const ErrorScreen()
             },
             home: const PlattersScreen());
       },

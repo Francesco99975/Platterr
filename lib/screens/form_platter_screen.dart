@@ -3,6 +3,7 @@ import 'package:platterr/providers/orders.dart';
 import 'package:platterr/providers/platter.dart';
 import 'package:platterr/providers/platter_format.dart';
 import 'package:platterr/providers/platters.dart';
+import 'package:platterr/screens/error_screen.dart';
 import 'package:platterr/screens/loading_screen.dart';
 import 'package:platterr/widgets/double_field.dart';
 import 'package:provider/provider.dart';
@@ -87,17 +88,19 @@ class _FormPlatterScreenState extends State<FormPlatterScreen> {
       });
       _formKey.currentState!.save();
 
+      late final bool result;
+
       if (!args['edit']) {
         for (var i = 0; i < _formatInputs.length; ++i) {
           _formats.add(PlatterFormat(int.parse(_sizeControllers[i].text),
               double.parse(_priceControllers[i].text)));
         }
 
-        await Provider.of<Platters>(context, listen: false)
+        result = await Provider.of<Platters>(context, listen: false)
             .addPlatter(Platter(_name, _description, _formats));
       } else {
         for (var i = 0; i < _formatInputs.length; ++i) {
-          if (i < _formatsIds.length) {
+          if (_formatsIds[i] != -1) {
             _formats.add(PlatterFormat(int.parse(_sizeControllers[i].text),
                 double.parse(_priceControllers[i].text),
                 id: _formatsIds[i]));
@@ -107,11 +110,17 @@ class _FormPlatterScreenState extends State<FormPlatterScreen> {
           }
         }
 
-        await Provider.of<Platters>(context, listen: false).updatePlatter(
-            Platter(_name, _description, _formats, id: _updateId));
+        result = await Provider.of<Platters>(context, listen: false)
+            .updatePlatter(
+                Platter(_name, _description, _formats, id: _updateId));
       }
 
-      Navigator.pop(context);
+      if (result) {
+        Navigator.pop(context);
+      } else {
+        Navigator.of(context).pushReplacementNamed(ErrorScreen.routeName,
+            arguments: {'home': true});
+      }
     }
   }
 
@@ -170,126 +179,133 @@ class _FormPlatterScreenState extends State<FormPlatterScreen> {
                       padding: const EdgeInsets.all(5.0),
                       child: Form(
                         key: _formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            TextFormField(
-                              autocorrect: false,
-                              initialValue: args['edit'] ? _name : null,
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                              decoration: InputDecoration(
-                                labelText: "Platter Name",
-                                labelStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(fontSize: 16),
-                                hintText: 'Enter platter name',
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2!
-                                    .copyWith(fontSize: 14),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              TextFormField(
+                                autocorrect: false,
+                                initialValue: args['edit'] ? _name : null,
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                                decoration: InputDecoration(
+                                  labelText: "Platter Name",
+                                  labelStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(fontSize: 16),
+                                  hintText: 'Enter platter name',
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .copyWith(fontSize: 14),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
                                 ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
-                                ),
+                                validator: (value) => value!.trim().isEmpty
+                                    ? "Enter a name for the platter please"
+                                    : null,
+                                onSaved: (newValue) => _name = newValue!,
                               ),
-                              validator: (value) => value!.trim().isEmpty
-                                  ? "Enter a name for the platter please"
-                                  : null,
-                              onSaved: (newValue) => _name = newValue!,
-                            ),
-                            const SizedBox(
-                              height: 50.0,
-                            ),
-                            TextFormField(
-                              autocorrect: false,
-                              maxLines: null,
-                              keyboardType: TextInputType.multiline,
-                              initialValue: args['edit'] ? _description : null,
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                              decoration: InputDecoration(
-                                labelText: "Platter Description",
-                                labelStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(fontSize: 16),
-                                hintText: 'Enter platter description',
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2!
-                                    .copyWith(fontSize: 14),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
-                                ),
+                              const SizedBox(
+                                height: 50.0,
                               ),
-                              validator: (value) => value!.trim().isEmpty
-                                  ? "Enter a description for the platter please"
-                                  : null,
-                              onSaved: (newValue) => _description = newValue!,
-                            ),
-                            const SizedBox(
-                              height: 50.0,
-                            ),
-                            Text("Platter Formats",
-                                style: Theme.of(context).textTheme.bodyText2),
-                            const SizedBox(
-                              height: 25.0,
-                            ),
-                            ElevatedButton.icon(
-                                onPressed: () {
-                                  setState(() {
-                                    _formatInputs.add(_getCredentialInput(
-                                        _formatInputs.length));
+                              TextFormField(
+                                autocorrect: false,
+                                maxLines: null,
+                                keyboardType: TextInputType.multiline,
+                                initialValue:
+                                    args['edit'] ? _description : null,
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                                decoration: InputDecoration(
+                                  labelText: "Platter Description",
+                                  labelStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(fontSize: 16),
+                                  hintText: 'Enter platter description',
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .copyWith(fontSize: 14),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                                validator: (value) => value!.trim().isEmpty
+                                    ? "Enter a description for the platter please"
+                                    : null,
+                                onSaved: (newValue) => _description = newValue!,
+                              ),
+                              const SizedBox(
+                                height: 50.0,
+                              ),
+                              Text("Platter Formats",
+                                  style: Theme.of(context).textTheme.bodyText2),
+                              const SizedBox(
+                                height: 25.0,
+                              ),
+                              ElevatedButton.icon(
+                                  onPressed: () {
+                                    setState(() {
+                                      _formatInputs.add(_getCredentialInput(
+                                          _formatInputs.length));
 
-                                    for (var i = _formatInputs.length - 2;
-                                        i >= 0;
-                                        --i) {
-                                      _formatInputs[i] = DoubleField(
-                                        index: i,
-                                        isOne: _formatInputs.length + 1 < 2,
-                                        isUsed: args['edit']
-                                            ? Provider.of<Orders>(context,
-                                                    listen: false)
-                                                .formatUsed()
-                                                .contains(_formatsIds[i])
-                                            : false,
-                                        keyControllers: _sizeControllers,
-                                        valueControllers: _priceControllers,
-                                        deviceSize: deviceSize,
-                                        fn: _setInputs,
-                                      );
-                                    }
-                                  });
-                                },
-                                icon: Icon(
-                                  Icons.add,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                    primary: Theme.of(context).backgroundColor),
-                                label: Text(
-                                  "Add Format",
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                )),
-                            SizedBox(
-                              height: 220,
-                              child: ListView.builder(
-                                  itemCount: _formatInputs.length,
-                                  itemBuilder: (context, index) =>
-                                      _formatInputs[index]),
-                            ),
-                          ],
+                                      _formatsIds.add(-1);
+
+                                      for (var i = _formatInputs.length - 2;
+                                          i >= 0;
+                                          --i) {
+                                        _formatInputs[i] = DoubleField(
+                                          index: i,
+                                          isOne: _formatInputs.length + 1 < 2,
+                                          isUsed: args['edit']
+                                              ? Provider.of<Orders>(context,
+                                                      listen: false)
+                                                  .formatUsed()
+                                                  .contains(_formatsIds[i])
+                                              : false,
+                                          keyControllers: _sizeControllers,
+                                          valueControllers: _priceControllers,
+                                          deviceSize: deviceSize,
+                                          fn: _setInputs,
+                                        );
+                                      }
+                                    });
+                                  },
+                                  icon: Icon(
+                                    Icons.add,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                      primary:
+                                          Theme.of(context).backgroundColor),
+                                  label: Text(
+                                    "Add Format",
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  )),
+                              SizedBox(
+                                height: 220,
+                                child: ListView.builder(
+                                    itemCount: _formatInputs.length,
+                                    itemBuilder: (context, index) =>
+                                        _formatInputs[index]),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
