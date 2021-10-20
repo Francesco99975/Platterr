@@ -27,7 +27,7 @@ class ThemeChanger with ChangeNotifier {
     notifyListeners();
   }
 
-  static const _fontFamily = "Merienda";
+  static const _fontFamily = "Poppins";
 
   static const _headline = TextStyle(fontWeight: FontWeight.bold, fontSize: 26);
   static const _bodyText = TextStyle(fontSize: 18);

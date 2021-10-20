@@ -27,10 +27,10 @@ late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseMessaging.instance.subscribeToTopic("all");
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   if (!kIsWeb) {
+    await FirebaseMessaging.instance.subscribeToTopic("all");
     channel = const AndroidNotificationChannel(
         'platterr_channel', // id
         'Main Platterr Channel',

@@ -97,5 +97,21 @@
       loadMainDartJs();
     }
   </script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-messaging.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD774vDgUfq3QuzbGkmxPg5R_sTIMKXPmY",
+      authDomain: "platterr-f5ca7.firebaseapp.com",
+      projectId: "platterr-f5ca7",
+      storageBucket: "platterr-f5ca7.appspot.com",
+      messagingSenderId: "819517764995",
+      appId: "1:819517764995:web:f7b81d07d616b155e2f2b6",
+      measurementId: "G-J6KQBE7S35"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    firebase.messagging();
+  </script>
 </body>
 </html>

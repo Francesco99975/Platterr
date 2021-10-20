@@ -208,6 +208,24 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
         : Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
             appBar: appBar,
+            bottomNavigationBar: InkWell(
+              onTap: _isLoading ? () {} : _save,
+              child: Container(
+                height: 55,
+                width: double.infinity,
+                color: Theme.of(context).colorScheme.secondary,
+                child: Center(
+                  child: Text(
+                    "${!args['edit'] ? 'ADD' : 'UPDATE'} ORDER",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(letterSpacing: 1.2),
+                  ),
+                ),
+              ),
+            ),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Column(
@@ -457,14 +475,14 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).backgroundColor),
-                        onPressed: _isLoading ? () {} : _save,
-                        child: Text(
-                          "${!args['edit'] ? 'Add' : 'Update'} Order",
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ))
+                    // ElevatedButton(
+                    //     style: ElevatedButton.styleFrom(
+                    //         primary: Theme.of(context).backgroundColor),
+                    //     onPressed: _isLoading ? () {} : _save,
+                    //     child: Text(
+                    //       "${!args['edit'] ? 'Add' : 'Update'} Order",
+                    //       style: Theme.of(context).textTheme.bodyText2,
+                    //     ))
                   ],
                 ),
               ),
