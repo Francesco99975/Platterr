@@ -31,6 +31,7 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
   late String _customerLastName;
   late String _phoneNumber;
   String _comment = 'No Comment';
+  double _extraFee = 0.0;
   bool _delivery = false;
   bool _paid = false;
   DateTime _dueDate = DateTime.now();
@@ -53,6 +54,7 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                 customerLastName: _customerLastName,
                 phoneNumber: _phoneNumber,
                 comment: _comment,
+                extraFee: _extraFee,
                 delivery: _delivery,
                 paid: _paid,
                 createdAt: DateTime.now(),
@@ -66,6 +68,7 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                 customerLastName: _customerLastName,
                 phoneNumber: _phoneNumber,
                 comment: _comment,
+                extraFee: _extraFee,
                 delivery: _delivery,
                 paid: _paid,
                 createdAt: (args['order'] as Order).createdAt,
@@ -170,6 +173,7 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
         _customerLastName = order.customerLastName;
         _phoneNumber = order.phoneNumber;
         _comment = order.comment;
+        _extraFee = order.extraFee;
         _delivery = order.delivery;
         _paid = order.paid;
         _dueDate = order.dueDate;
@@ -377,6 +381,43 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                                     ? "Enter a comment please"
                                     : null,
                                 onSaved: (newValue) => _comment = newValue!,
+                              ),
+                              const SizedBox(
+                                height: 50.0,
+                              ),
+                              TextFormField(
+                                initialValue: _extraFee.toString(),
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                                decoration: InputDecoration(
+                                  labelText: "Extra Fee",
+                                  labelStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(fontSize: 16),
+                                  hintText: 'Enter an extra fee',
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .copyWith(fontSize: 14),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                                autocorrect: false,
+                                onSaved: (newValue) => _extraFee =
+                                    double.tryParse(newValue!) ?? 0.0,
+                                keyboardType: TextInputType.number,
+                                validator: (value) => value!.trim().isEmpty
+                                    ? "Please Enter an extra price"
+                                    : double.tryParse(value) == null
+                                        ? "Only numbers allowed"
+                                        : null,
                               ),
                               const SizedBox(
                                 height: 50.0,

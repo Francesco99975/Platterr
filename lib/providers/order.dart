@@ -16,6 +16,7 @@ class Order with ChangeNotifier {
   String customerLastName = '';
   String phoneNumber = '';
   String comment = '';
+  double extraFee = 0.0;
   bool delivery = false;
   bool paid = false;
   DateTime createdAt = DateTime(1999);
@@ -28,6 +29,7 @@ class Order with ChangeNotifier {
       required this.customerLastName,
       required this.phoneNumber,
       required this.comment,
+      required this.extraFee,
       required this.delivery,
       required this.paid,
       required this.createdAt,
@@ -40,6 +42,7 @@ class Order with ChangeNotifier {
     customerLastName = map['customerLastName'];
     phoneNumber = map['phoneNumber'];
     comment = map['comment'];
+    extraFee = map['extraFee'].toDouble();
     delivery = map['delivery'];
     paid = map['paid'];
     createdAt = DateTime.parse(map['createdAt']);
@@ -48,7 +51,10 @@ class Order with ChangeNotifier {
 
   String get fullname => customerFirstName + " " + customerLastName;
 
-  double get total => platters.fold(0.0, (prev, el) => prev + el.format.price);
+  double get subtotal =>
+      platters.fold(0.0, (prev, el) => prev + el.format.price);
+
+  double get total => subtotal + extraFee;
 
   Map<String, dynamic> toMapAdd() {
     var map = <String, dynamic>{
@@ -57,6 +63,7 @@ class Order with ChangeNotifier {
       'customerLastName': customerLastName,
       'phoneNumber': phoneNumber,
       'comment': comment,
+      'extraFee': extraFee,
       'delivery': delivery,
       'paid': paid,
       'createdAt': createdAt.toIso8601String(),
@@ -76,6 +83,7 @@ class Order with ChangeNotifier {
       'customerLastName': customerLastName,
       'phoneNumber': phoneNumber,
       'comment': comment,
+      'extraFee': extraFee,
       'delivery': delivery,
       'paid': paid,
       'createdAt': createdAt.toIso8601String(),
