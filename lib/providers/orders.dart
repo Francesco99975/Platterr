@@ -89,8 +89,8 @@ class Orders with ChangeNotifier {
 
   Future<bool> generatePDF(int id) async {
     try {
-      await http.post(Uri.parse('$testUrl/orders/pdf/$id'));
-      return true;
+      final res = await http.post(Uri.parse('$testUrl/orders/pdf/$id'));
+      return res.body == "true";
     } catch (e) {
       return false;
     }

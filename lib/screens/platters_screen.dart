@@ -33,7 +33,7 @@ class PlattersScreen extends StatelessWidget {
                       backgroundColor: Theme.of(context).colorScheme.secondary,
                       foregroundColor: Theme.of(context).primaryColor,
                       title: Text(
-                        "Platters",
+                        "Deli Platters",
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                       actions: [

@@ -49,11 +49,26 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       setState(() {
                         _isLoading = true;
                       });
-                      await Provider.of<Orders>(context, listen: false)
-                          .generatePDF(widget.order.id!);
+                      final res =
+                          await Provider.of<Orders>(context, listen: false)
+                              .generatePDF(widget.order.id!);
                       setState(() {
                         _isLoading = false;
                       });
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: res ? Colors.green : Colors.red,
+                          duration: const Duration(seconds: 3),
+                          elevation: 5,
+                          behavior: SnackBarBehavior.floating,
+                          content: Text(
+                            res
+                                ? "Successfully generated PDF!"
+                                : "Failed to generate PDF...",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(color: Colors.white),
+                          )));
                     },
               child: Container(
                 height: 55,
