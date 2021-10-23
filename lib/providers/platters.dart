@@ -16,7 +16,7 @@ class Platters with ChangeNotifier {
   Future<bool> loadPlatters() async {
     try {
       var res =
-          json.decode((await http.get(Uri.parse('$testUrl/platters'))).body);
+          json.decode((await http.get(Uri.parse('$baseUrl/platters'))).body);
 
       List<Platter> temp = [];
 
@@ -33,7 +33,7 @@ class Platters with ChangeNotifier {
 
   Future<bool> addPlatter(Platter platter) async {
     try {
-      var res = json.decode((await http.post(Uri.parse('$testUrl/platters'),
+      var res = json.decode((await http.post(Uri.parse('$baseUrl/platters'),
               headers: {
                 'Content-type': 'application/json',
                 "Accept": "application/json"
@@ -51,7 +51,7 @@ class Platters with ChangeNotifier {
 
   Future<bool> updatePlatter(Platter platter) async {
     try {
-      var res = json.decode((await http.put(Uri.parse('$testUrl/platters'),
+      var res = json.decode((await http.put(Uri.parse('$baseUrl/platters'),
               headers: {
                 'Content-type': 'application/json',
                 "Accept": "application/json"
@@ -70,7 +70,7 @@ class Platters with ChangeNotifier {
 
   Future<bool> deletePlatter(int id) async {
     try {
-      await http.delete(Uri.parse('$testUrl/platters/$id'));
+      await http.delete(Uri.parse('$baseUrl/platters/$id'));
 
       _items.removeWhere((itm) => itm.id == id);
       notifyListeners();
