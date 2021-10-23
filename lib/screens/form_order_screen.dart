@@ -282,7 +282,7 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                                       ? "Enter firstname please"
                                       : null,
                                   onSaved: (newValue) =>
-                                      _customerFirstName = newValue!,
+                                      _customerFirstName = newValue!.trim(),
                                 ),
                                 const SizedBox(
                                   height: 50.0,
@@ -319,7 +319,7 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                                       ? "Enter lastname please"
                                       : null,
                                   onSaved: (newValue) =>
-                                      _customerLastName = newValue!,
+                                      _customerLastName = newValue!.trim(),
                                 ),
                                 const SizedBox(
                                   height: 50.0,
@@ -356,7 +356,7 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                                       ? "Enter phone number please"
                                       : null,
                                   onSaved: (newValue) =>
-                                      _phoneNumber = newValue!,
+                                      _phoneNumber = newValue!.trim(),
                                 ),
                                 const SizedBox(
                                   height: 50.0,
@@ -393,7 +393,8 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                                   validator: (value) => value!.trim().isEmpty
                                       ? "Enter a comment please"
                                       : null,
-                                  onSaved: (newValue) => _comment = newValue!,
+                                  onSaved: (newValue) =>
+                                      _comment = newValue!.trim(),
                                 ),
                                 const SizedBox(
                                   height: 50.0,

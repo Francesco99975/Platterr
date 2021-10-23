@@ -233,7 +233,8 @@ class _FormPlatterScreenState extends State<FormPlatterScreen> {
                                   validator: (value) => value!.trim().isEmpty
                                       ? "Enter a name for the platter please"
                                       : null,
-                                  onSaved: (newValue) => _name = newValue!,
+                                  onSaved: (newValue) =>
+                                      _name = newValue!.trim(),
                                 ),
                                 const SizedBox(
                                   height: 50.0,
@@ -272,7 +273,7 @@ class _FormPlatterScreenState extends State<FormPlatterScreen> {
                                       ? "Enter a description for the platter please"
                                       : null,
                                   onSaved: (newValue) =>
-                                      _description = newValue!,
+                                      _description = newValue!.trim(),
                                 ),
                                 const SizedBox(
                                   height: 50.0,
