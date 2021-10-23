@@ -97,6 +97,7 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
   }
 
   Future<void> _presentDatePicker(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     final pickedDate = await showDatePicker(
         context: context,
         initialDate: _dueDate,
@@ -129,6 +130,7 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     final pickedTime = await showTimePicker(
         context: context,
         builder: (context, child) {
@@ -230,301 +232,322 @@ class _FormOrderScreenState extends State<FormOrderScreen> {
                 ),
               ),
             ),
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      height: deviceSize.height / 1.4,
-                      width: deviceSize.width,
-                      color: Theme.of(context).backgroundColor,
-                      margin: const EdgeInsets.all(18.0),
-                      padding: const EdgeInsets.all(5.0),
-                      child: Form(
-                        key: _formKey,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              TextFormField(
-                                autocorrect: false,
-                                initialValue:
-                                    args['edit'] ? _customerFirstName : null,
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
-                                decoration: InputDecoration(
-                                  labelText: "Customer Firstname",
-                                  labelStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(fontSize: 16),
-                                  hintText: 'Enter firstname',
-                                  hintStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(fontSize: 14),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                validator: (value) => value!.trim().isEmpty
-                                    ? "Enter firstname please"
-                                    : null,
-                                onSaved: (newValue) =>
-                                    _customerFirstName = newValue!,
-                              ),
-                              const SizedBox(
-                                height: 50.0,
-                              ),
-                              TextFormField(
-                                autocorrect: false,
-                                initialValue:
-                                    args['edit'] ? _customerLastName : null,
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
-                                decoration: InputDecoration(
-                                  labelText: "Customer Lastname",
-                                  labelStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(fontSize: 16),
-                                  hintText: 'Enter lastname',
-                                  hintStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(fontSize: 14),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                validator: (value) => value!.trim().isEmpty
-                                    ? "Enter lastname please"
-                                    : null,
-                                onSaved: (newValue) =>
-                                    _customerLastName = newValue!,
-                              ),
-                              const SizedBox(
-                                height: 50.0,
-                              ),
-                              TextFormField(
-                                autocorrect: false,
-                                initialValue:
-                                    args['edit'] ? _phoneNumber : null,
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
-                                decoration: InputDecoration(
-                                  labelText: "Customer Phone Number",
-                                  labelStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(fontSize: 16),
-                                  hintText: 'Enter phone number',
-                                  hintStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(fontSize: 14),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                validator: (value) => value!.trim().isEmpty
-                                    ? "Enter phone number please"
-                                    : null,
-                                onSaved: (newValue) => _phoneNumber = newValue!,
-                              ),
-                              const SizedBox(
-                                height: 50.0,
-                              ),
-                              TextFormField(
-                                autocorrect: false,
-                                initialValue: _comment,
-                                maxLines: null,
-                                keyboardType: TextInputType.multiline,
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
-                                decoration: InputDecoration(
-                                  labelText: "Order Comment",
-                                  labelStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(fontSize: 16),
-                                  hintText: 'Comment order',
-                                  hintStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(fontSize: 14),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                validator: (value) => value!.trim().isEmpty
-                                    ? "Enter a comment please"
-                                    : null,
-                                onSaved: (newValue) => _comment = newValue!,
-                              ),
-                              const SizedBox(
-                                height: 50.0,
-                              ),
-                              TextFormField(
-                                initialValue: _extraFee.toString(),
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
-                                decoration: InputDecoration(
-                                  labelText: "Extra Fee",
-                                  labelStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(fontSize: 16),
-                                  hintText: 'Enter an extra fee',
-                                  hintStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(fontSize: 14),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                autocorrect: false,
-                                onSaved: (newValue) => _extraFee =
-                                    double.tryParse(newValue!) ?? 0.0,
-                                keyboardType: TextInputType.number,
-                                validator: (value) => value!.trim().isEmpty
-                                    ? "Please Enter an extra price"
-                                    : double.tryParse(value) == null
-                                        ? "Only numbers allowed"
-                                        : null,
-                              ),
-                              const SizedBox(
-                                height: 50.0,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: !_delivery
-                                              ? Theme.of(context).primaryColor
-                                              : Theme.of(context)
-                                                  .primaryColorDark,
-                                          borderRadius: const BorderRadius.only(
-                                              topLeft: Radius.circular(5),
-                                              bottomLeft: Radius.circular(5))),
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text("Pickup",
-                                          style: !_delivery
-                                              ? Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2
-                                              : Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2!
-                                                  .copyWith(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .secondaryVariant)),
-                                    ),
-                                    onTap: () => _toggleDelivery(false),
-                                  ),
-                                  InkWell(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: _delivery
-                                              ? Theme.of(context).primaryColor
-                                              : Theme.of(context)
-                                                  .primaryColorDark,
-                                          borderRadius: const BorderRadius.only(
-                                              topRight: Radius.circular(5),
-                                              bottomRight: Radius.circular(5))),
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text("Delivery",
-                                          style: _delivery
-                                              ? Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2
-                                              : Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2!
-                                                  .copyWith(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .secondaryVariant)),
-                                    ),
-                                    onTap: () => _toggleDelivery(true),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 50.0,
-                              ),
-                              Text("Due Date",
-                                  style: Theme.of(context).textTheme.bodyText1),
-                              const SizedBox(
-                                height: 25.0,
-                              ),
-                              TextButton.icon(
-                                  onPressed: () async =>
-                                      await _presentDatePicker(context),
-                                  icon: Icon(
-                                    Icons.calendar_today,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  label: Text(
-                                    DateFormat.yMMMMEEEEd().format(_dueDate),
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                  )),
-                              const SizedBox(
-                                height: 25.0,
-                              ),
-                              TextButton.icon(
-                                  onPressed: () async =>
-                                      await _selectTime(context),
-                                  icon: Icon(Icons.access_time,
+            body: InkWell(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: deviceSize.height / 1.4,
+                        width: deviceSize.width,
+                        color: Theme.of(context).backgroundColor,
+                        margin: const EdgeInsets.all(18.0),
+                        padding: const EdgeInsets.all(5.0),
+                        child: Form(
+                          key: _formKey,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                TextFormField(
+                                  autocorrect: false,
+                                  initialValue:
+                                      args['edit'] ? _customerFirstName : null,
+                                  style: TextStyle(
                                       color: Theme.of(context).primaryColor),
-                                  label: Text(DateFormat.Hm().format(_dueDate),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText2)),
-                            ],
+                                  decoration: InputDecoration(
+                                    labelText: "Customer Firstname",
+                                    labelStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(fontSize: 16),
+                                    hintText: 'Enter firstname',
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(fontSize: 14),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                  ),
+                                  validator: (value) => value!.trim().isEmpty
+                                      ? "Enter firstname please"
+                                      : null,
+                                  onSaved: (newValue) =>
+                                      _customerFirstName = newValue!,
+                                ),
+                                const SizedBox(
+                                  height: 50.0,
+                                ),
+                                TextFormField(
+                                  autocorrect: false,
+                                  initialValue:
+                                      args['edit'] ? _customerLastName : null,
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                  decoration: InputDecoration(
+                                    labelText: "Customer Lastname",
+                                    labelStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(fontSize: 16),
+                                    hintText: 'Enter lastname',
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(fontSize: 14),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                  ),
+                                  validator: (value) => value!.trim().isEmpty
+                                      ? "Enter lastname please"
+                                      : null,
+                                  onSaved: (newValue) =>
+                                      _customerLastName = newValue!,
+                                ),
+                                const SizedBox(
+                                  height: 50.0,
+                                ),
+                                TextFormField(
+                                  autocorrect: false,
+                                  initialValue:
+                                      args['edit'] ? _phoneNumber : null,
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                  decoration: InputDecoration(
+                                    labelText: "Customer Phone Number",
+                                    labelStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(fontSize: 16),
+                                    hintText: 'Enter phone number',
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(fontSize: 14),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                  ),
+                                  validator: (value) => value!.trim().isEmpty
+                                      ? "Enter phone number please"
+                                      : null,
+                                  onSaved: (newValue) =>
+                                      _phoneNumber = newValue!,
+                                ),
+                                const SizedBox(
+                                  height: 50.0,
+                                ),
+                                TextFormField(
+                                  autocorrect: false,
+                                  initialValue: _comment,
+                                  maxLines: null,
+                                  keyboardType: TextInputType.multiline,
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                  decoration: InputDecoration(
+                                    labelText: "Order Comment",
+                                    labelStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(fontSize: 16),
+                                    hintText: 'Comment order',
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(fontSize: 14),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                  ),
+                                  validator: (value) => value!.trim().isEmpty
+                                      ? "Enter a comment please"
+                                      : null,
+                                  onSaved: (newValue) => _comment = newValue!,
+                                ),
+                                const SizedBox(
+                                  height: 50.0,
+                                ),
+                                TextFormField(
+                                  initialValue: _extraFee.toString(),
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                  decoration: InputDecoration(
+                                    labelText: "Extra Fee",
+                                    labelStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(fontSize: 16),
+                                    hintText: 'Enter an extra fee',
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(fontSize: 14),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                  ),
+                                  autocorrect: false,
+                                  onSaved: (newValue) => _extraFee =
+                                      double.tryParse(newValue!) ?? 0.0,
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) => value!.trim().isEmpty
+                                      ? "Please Enter an extra price"
+                                      : double.tryParse(value) == null
+                                          ? "Only numbers allowed"
+                                          : null,
+                                ),
+                                const SizedBox(
+                                  height: 50.0,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: !_delivery
+                                                ? Theme.of(context).primaryColor
+                                                : Theme.of(context)
+                                                    .primaryColorDark,
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    bottomLeft:
+                                                        Radius.circular(5))),
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text("Pickup",
+                                            style: !_delivery
+                                                ? Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText2
+                                                : Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText2!
+                                                    .copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .secondaryVariant)),
+                                      ),
+                                      onTap: () => _toggleDelivery(false),
+                                    ),
+                                    InkWell(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: _delivery
+                                                ? Theme.of(context).primaryColor
+                                                : Theme.of(context)
+                                                    .primaryColorDark,
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(5),
+                                                    bottomRight:
+                                                        Radius.circular(5))),
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text("Delivery",
+                                            style: _delivery
+                                                ? Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText2
+                                                : Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText2!
+                                                    .copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .secondaryVariant)),
+                                      ),
+                                      onTap: () => _toggleDelivery(true),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 50.0,
+                                ),
+                                Text("Due Date",
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1),
+                                const SizedBox(
+                                  height: 25.0,
+                                ),
+                                TextButton.icon(
+                                    onPressed: () async =>
+                                        await _presentDatePicker(context),
+                                    icon: Icon(
+                                      Icons.calendar_today,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                    label: Text(
+                                      DateFormat.yMMMMEEEEd().format(_dueDate),
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                    )),
+                                const SizedBox(
+                                  height: 25.0,
+                                ),
+                                TextButton.icon(
+                                    onPressed: () async =>
+                                        await _selectTime(context),
+                                    icon: Icon(Icons.access_time,
+                                        color: Theme.of(context).primaryColor),
+                                    label: Text(
+                                        DateFormat.Hm().format(_dueDate),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2)),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    // ElevatedButton(
-                    //     style: ElevatedButton.styleFrom(
-                    //         primary: Theme.of(context).backgroundColor),
-                    //     onPressed: _isLoading ? () {} : _save,
-                    //     child: Text(
-                    //       "${!args['edit'] ? 'Add' : 'Update'} Order",
-                    //       style: Theme.of(context).textTheme.bodyText2,
-                    //     ))
-                  ],
+                      // ElevatedButton(
+                      //     style: ElevatedButton.styleFrom(
+                      //         primary: Theme.of(context).backgroundColor),
+                      //     onPressed: _isLoading ? () {} : _save,
+                      //     child: Text(
+                      //       "${!args['edit'] ? 'Add' : 'Update'} Order",
+                      //       style: Theme.of(context).textTheme.bodyText2,
+                      //     ))
+                    ],
+                  ),
                 ),
               ),
             ),
