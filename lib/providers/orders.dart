@@ -25,7 +25,7 @@ class Orders with ChangeNotifier {
   Future<bool> loadOrders() async {
     try {
       var res =
-          json.decode((await http.get(Uri.parse('$baseUrl/orders'))).body);
+          json.decode((await http.get(Uri.parse('$testUrl/orders'))).body);
       List<Order> temp = [];
 
       for (var el in res) {
@@ -41,7 +41,7 @@ class Orders with ChangeNotifier {
 
   Future<bool> addOrder(Order order) async {
     try {
-      var res = json.decode((await http.post(Uri.parse('$baseUrl/orders'),
+      var res = json.decode((await http.post(Uri.parse('$testUrl/orders'),
               headers: {
                 'Content-type': 'application/json',
                 "Accept": "application/json"
@@ -59,7 +59,7 @@ class Orders with ChangeNotifier {
 
   Future<bool> updateOrder(Order order) async {
     try {
-      var res = json.decode((await http.put(Uri.parse('$baseUrl/orders'),
+      var res = json.decode((await http.put(Uri.parse('$testUrl/orders'),
               headers: {
                 'Content-type': 'application/json',
                 "Accept": "application/json"
@@ -78,7 +78,7 @@ class Orders with ChangeNotifier {
 
   Future<bool> deleteOrder(int id) async {
     try {
-      await http.delete(Uri.parse('$baseUrl/orders/$id'));
+      await http.delete(Uri.parse('$testUrl/orders/$id'));
       _items.removeWhere((itm) => itm.id == id);
       notifyListeners();
       return true;
@@ -89,7 +89,7 @@ class Orders with ChangeNotifier {
 
   Future<bool> generatePDF(int id) async {
     try {
-      final res = await http.post(Uri.parse('$baseUrl/orders/pdf/$id'));
+      final res = await http.post(Uri.parse('$testUrl/orders/pdf/$id'));
       return res.body == "true";
     } catch (e) {
       return false;
