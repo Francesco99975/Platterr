@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 const testUrl = "http://10.0.2.2:5000";
-const baseUrl = "https://platterr.francescobarranca.dev";
+const baseUrl = "https://platterr.dmz.urx.ink";
 
 class Platters with ChangeNotifier {
   List<Platter> _items = [];
